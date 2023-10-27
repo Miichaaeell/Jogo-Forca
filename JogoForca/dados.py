@@ -13,9 +13,9 @@ def newcadastro():
     comando = f'INSERT INTO jogadores (NOME) VALUES ("{nome}")'
     cursor.execute(comando)
     conexao.commit()
-    return nome
     cursor.close()
     conexao.close()
+    return nome
 def deletar():
     conexao = mysql.connector.connect(
         host='localhost',
@@ -29,15 +29,16 @@ def deletar():
     linha(f'{"DELETAR JOGADOR":^30}')
     resultado = cursor.fetchall()
     print(f'\033[33m{"INDICE":<15}{"NOME":>15}\033[m')
-    for jogador in resultado:
-        print(f'\033[33m{jogador[0]:<15}{jogador[1]:>15}\033[m')
+    for indice, jogador in resultado:
+        print(f'\033[33m{indice:<15}{jogador:>15}\033[m')
     while True:
         delete = str(input('Qual jogador quer deletar? '))
-        if delete.isnumeric() and int(delete) <= len(resultado):
-            print(f'{delete} Excluido com Sucesso!')
+        if delete.isnumeric() and int(delete) <= len(resultado) and int(delete) != 0:
+            print(f'Jogador {resultado[int(delete) - 1][1]} excluido com Sucesso!')
             break
         else:
             print(f'"{delete}" não é válido, utilize o indice para selecionar o jogador ')
+
     comando1 = f'DELETE FROM jogadores WHERE ID = {int(delete)}'
     comando2 = f'ALTER TABLE jogadores DROP ID'
     comando3 = f'ALTER TABLE jogadores ADD ID INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (ID)'
@@ -60,14 +61,14 @@ def mostrarjogadores():
     cursor.execute(comando)
     jogadores = cursor.fetchall()
     print(f'\033[34m{"INDICE":<6}{"NOME":^15}{"PARTIDAS":>7}\033[m')
-    for jogador in jogadores:
-        print(f'{jogador[0]:<6}{jogador[1]:^15}{jogador[2]:^7}')
+    for indice, nome, partidas in jogadores:
+        print(f'{indice:<6}{nome:^15}{partidas:^7}')
     jogador = str(input('Quem está jogando? '))
     while not jogador.isnumeric() or int(jogador) == 0 or int(jogador) > len(jogadores):
         jogador = str(input(f'"{jogador.upper()}" não é um indice válido, tente novamente \nQuem está jogando? '))
-    return jogador
     cursor.close()
     conexao.close()
+    return jogador
 def partidas(jogador):
     conexao = mysql.connector.connect(
         host='localhost',
@@ -79,9 +80,9 @@ def partidas(jogador):
     comando = f'SELECT PARTIDAS FROM jogadores WHERE ID = {jogador}'
     cursor.execute(comando)
     resultado = cursor.fetchall()
-    return resultado[0][0]
     cursor.close()
     conexao.close()
+    return resultado[0][0]
 def editarpartida(partida, jogador):
     conexao = mysql.connector.connect(
         host='localhost',
@@ -106,9 +107,9 @@ def vitorias(jogador):
     comando = f'SELECT VITORIAS FROM jogadores WHERE ID = {jogador}'
     cursor.execute(comando)
     resultado = cursor.fetchall()
-    return resultado[0][0]
     cursor.close()
     conexao.close()
+    return resultado[0][0]
 def editarvitorias(vitorias, jogador):
     conexao = mysql.connector.connect(
         host='localhost',
@@ -144,11 +145,12 @@ def verpontos():
     )
     cursor = conexao.cursor()
     linha(f'{"RANKING DOS JOGADORES":^30}')
-    print(f'\033[34m{"Jogador":<10}{"VITÓRIAS":^10}{"PONTOS":>10}\033[m')
-    comando = f'SELECT NOME, PARTIDAS, PONTOS FROM jogadores ORDER BY PONTOS DESC'
+    print(f'\033[34m{"Jogador":<8}{"PARTIDAS":^10}{"VITÓRIAS":^10}{"PONTOS":>6}\033[m')
+    comando = f'SELECT NOME,PARTIDAS, VITORIAS, PONTOS FROM jogadores ORDER BY PONTOS DESC'
     cursor.execute(comando)
     resultado = cursor.fetchall()
-    for jogador in resultado:
-        print(f'\033[34m{jogador[0]:<10}{jogador[1]:^10}{jogador[2]:>10.2f}\033[m')
+    for jogador, partida, vitoria, ponto in resultado:
+        print(f'\033[34m{jogador:<8}{partida:^10}{vitoria:^10}{ponto:>6.2f}\033[m')
     cursor.close()
     conexao.close()
+

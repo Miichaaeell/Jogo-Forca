@@ -2,12 +2,13 @@ from dados import *
 from interface import *
 from Funções import *
 from time import sleep
-chances = 4
+chances = 5
 chutes = []
+resposta = ''
 ganhou = False
 try:
     while True:  # Menu
-        while True:
+        while resposta != 0:
             resposta = menu()
             if resposta == 1:
                 newjogador = newcadastro().upper()
@@ -21,15 +22,17 @@ try:
                 vitoria = vitorias(jogador)
                 partida = int(partidas(jogador))
                 break
-            elif resposta == 0:
-                break
+            #elif resposta == 0:
+            #    break
         if resposta == 0:
             break
         palavras = aleatorio()
         palavra = palavras['palavra']
         dica = palavras['dica']
-        while True:  # Jogo
-            linha(f'Sua palavra contem {len(palavra)} letras e a dica é {dica.upper()}')
+        resposta = 'S'
+        while resposta not in 'Nn':  # Jogo
+            linha(f'Sua palavra contem {len(palavra)} letras e a dica é {dica.upper()}') if chances <= 3 else linha(f'Sua palavra contem {len(palavra)} letras')
+            print(palavra)
             mostrarpalvra(palavra,chutes)
             # Validação do chute
             chute = validarchute(palavra)
@@ -52,12 +55,12 @@ try:
                     editarvitorias(vitoria, jogador)
                     editarpontos(ponto, jogador)
                     chutes.clear()
-                    chances = 4
+                    chances = 5
                     ganhou = False
-                    palavra = aleatorio()
+                    palavras = aleatorio()
+                    palavra = palavras['palavra']
+                    dica = palavras['dica']
                     resposta = continuar()
-                    if resposta in 'nN':
-                        break
                 else:
                     chutes.append(chute)
                     print(f'\033[1:32mParabéns a palavra contém a letra {chute}\033[m')
@@ -83,12 +86,12 @@ try:
                 editarvitorias(vitoria, jogador)
                 editarpontos(ponto, jogador)
                 chutes.clear()
-                chances = 4
+                chances = 5
                 ganhou = False
-                palavra = aleatorio()
+                palavras = aleatorio()
+                palavra = palavras['palavra']
+                dica = palavras['dica']
                 resposta = continuar()
-                if resposta in 'nN':
-                    break
             elif chances == 0:
                 print(f'\033[31mOh não! Suas chances se esgotaram, Boa Sorte da proxima vez.\033[m')
                 partida += 1
@@ -96,11 +99,11 @@ try:
                 editarpartida(partida, jogador)
                 editarpontos(ponto, jogador)
                 chutes.clear()
-                chances = 4
+                chances = 5
                 ganhou = False
-                palavra = aleatorio()
+                palavras = aleatorio()
+                palavra = palavras['palavra']
+                dica = palavras['dica']
                 resposta = continuar()
-                if resposta in 'nN':
-                    break
 except KeyboardInterrupt:
     print(f'\n\033[31mO usuário encerrou o jogo\033[m')
