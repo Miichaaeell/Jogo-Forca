@@ -22,8 +22,6 @@ try:
                 vitoria = vitorias(jogador)
                 partida = int(partidas(jogador))
                 break
-            #elif resposta == 0:
-            #    break
         if resposta == 0:
             break
         palavras = aleatorio()
@@ -32,7 +30,6 @@ try:
         resposta = 'S'
         while resposta not in 'Nn':  # Jogo
             linha(f'Sua palavra contem {len(palavra)} letras e a dica é {dica.upper()}') if chances <= 3 else linha(f'Sua palavra contem {len(palavra)} letras')
-            print(palavra)
             mostrarpalvra(palavra,chutes)
             # Validação do chute
             chute = validarchute(palavra)
@@ -73,7 +70,7 @@ try:
                 else:
                     print(f'\033[31mInfelizmente a palavra não possui a letra "{chute}", você ainda possui {chances} chances\033[m')
             # Validação do jogo
-            ganhou = True
+            #ganhou = True
             for letra in palavra:
                 if letra not in chutes:
                     ganhou = False
