@@ -145,7 +145,7 @@ def verpontos():
         database='jogoforca'
     )
     cursor = conexao.cursor()
-    linha(f'{"RANKING DOS JOGADORES":^30}')
+    linha(f'{"RANKING DOS JOGADORES":^34}')
     print(f'\033[34m{"JOGADOR":<8}{"PARTIDAS":^10}{"VITÓRIAS":^10}{"PONTOS":>6}\033[m')
     comando = f'SELECT NOME,PARTIDAS, VITORIAS, PONTOS FROM jogadores ORDER BY PONTOS DESC'
     cursor.execute(comando)
@@ -155,3 +155,16 @@ def verpontos():
     cursor.close()
     conexao.close()
 
+def updateplayer(partida, vitorias, pontos, jogador):
+    conexao = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='jogoforca',
+    )
+    cursor = conexao.cursor()
+    comando = f'UPDATE jogadores SET PARTIDAS = {partida}, VITORIAS = {vitorias}, PONTOS = {pontos} where ID = {jogador}'
+    cursor.execute(comando)
+    conexao.commit()
+    cursor.close()
+    conexao.close()

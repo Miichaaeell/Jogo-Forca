@@ -4,7 +4,7 @@ def linha(msg):
     print('-' * len(msg), '\033[m')
 
 def menu():
-    linha(f'{"MENU":^30}')
+    linha(f'{"MENU":^34}')
     print(f'\033[36m1 - Criar Cadastro'
           f'\n2 - Selecionar jogador'
           f'\n3 - Ver pontuação'

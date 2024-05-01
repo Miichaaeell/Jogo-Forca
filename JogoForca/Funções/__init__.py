@@ -1,4 +1,6 @@
 from JogoForca import interface
+from JogoForca import dados
+from time import sleep
 def cadastro():
     player = {}
     interface.linha(f'{"Novo Cadastro":^30}')
@@ -63,3 +65,31 @@ def aleatorio():
     {'palavra': 'ACSA', 'dica': 'nome feminino'}
     )
     return palavras[randint(0, len(palavras) - 1)]
+
+def inicar():
+    retorno = ''
+    while retorno != 0:
+        retorno = interface.menu()
+        if retorno == 1:
+            newjogador = dados.newcadastro()
+            print(f'{newjogador} cadastrado com sucesso')
+        elif retorno == 3:
+            dados.verpontos()
+        elif retorno == 4:
+            dados.deletar()
+        elif retorno == 2:
+            jogador = dados.mostrarjogadores()
+            if int(jogador) != 0:
+                return jogador
+                break
+        else:
+            return retorno
+
+def timercheck():
+    print(f'Verificando', end='')
+    sleep(0.5)
+    print('.', end='')
+    sleep(0.5)
+    print('.', end='')
+    sleep(0.5)
+    print('.')
