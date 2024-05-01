@@ -1,12 +1,13 @@
 from JogoForca import interface
 def cadastro():
-    jogador = {}
+    player = {}
     interface.linha(f'{"Novo Cadastro":^30}')
-    jogador['Nome'] = str(input('Nome do Jogador(a): '))
-    jogador['Partida'] = 0
-    jogador['Vitorias'] = 0
-    jogador['Pontos'] = 0
-    return jogador
+    player['NOME'] = str(input('Nome do Jogador(a): '))
+    player['PARTIDAS'] = 0
+    player['VITORIAS'] = 0
+    player['PONTOS'] = 0
+    print(player)
+    return player
 
 def listarjogadores(lista):
     interface.linha(f'{"JOGADORES":^30}')

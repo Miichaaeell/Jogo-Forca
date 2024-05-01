@@ -9,8 +9,8 @@ def newcadastro():
     )
     cursor = conexao.cursor()
     linha(f'{"Novo Cadastro":^30}')
-    nome = str(input('Nome: '))
-    comando = f'INSERT INTO jogadores (NOME) VALUES ("{nome}")'
+    nome = str(input('Nome: ')).upper()
+    comando = f'INSERT INTO jogadores (NOME, PARTIDAS, VITORIAS, PONTOS) VALUES ("{nome}", 0, 0, 0)'
     cursor.execute(comando)
     conexao.commit()
     cursor.close()
@@ -32,9 +32,10 @@ def deletar():
     for indice, jogador in resultado:
         print(f'\033[33m{indice:<15}{jogador:>15}\033[m')
     while True:
-        delete = str(input('Qual jogador quer deletar? '))
-        if delete.isnumeric() and int(delete) <= len(resultado) and int(delete) != 0:
-            print(f'Jogador {resultado[int(delete) - 1][1]} excluido com Sucesso!')
+        delete = str(input('Digite 0 para voltar ao menu. \nQual jogador quer deletar? '))
+        if delete.isnumeric() and int(delete) <= len(resultado):
+            if int(delete) != 0:
+                print(f'Jogador {resultado[int(delete) - 1][1]} excluido com Sucesso!')
             break
         else:
             print(f'"{delete}" não é válido, utilize o indice para selecionar o jogador ')
@@ -61,14 +62,14 @@ def mostrarjogadores():
     cursor.execute(comando)
     jogadores = cursor.fetchall()
     print(f'\033[34m{"INDICE":<6}{"NOME":^15}{"PARTIDAS":>7}\033[m')
-    for indice, nome, partidas in jogadores:
-        print(f'{indice:<6}{nome:^15}{partidas:^7}')
-    jogador = str(input('Quem está jogando? '))
-    while not jogador.isnumeric() or int(jogador) == 0 or int(jogador) > len(jogadores):
+    for id, nome, partidas in jogadores:
+        print(f'{id:<6}{nome:^15}{partidas:^7}')
+    jogador = str(input('Digite 0 para voltar ao menu. \nQuem está jogando?'))
+    while not jogador.isnumeric() or int(jogador) > len(jogadores):
         jogador = str(input(f'"{jogador.upper()}" não é um indice válido, tente novamente \nQuem está jogando? '))
     cursor.close()
     conexao.close()
-    return jogador
+    return int(jogador)
 def partidas(jogador):
     conexao = mysql.connector.connect(
         host='localhost',
@@ -145,7 +146,7 @@ def verpontos():
     )
     cursor = conexao.cursor()
     linha(f'{"RANKING DOS JOGADORES":^30}')
-    print(f'\033[34m{"Jogador":<8}{"PARTIDAS":^10}{"VITÓRIAS":^10}{"PONTOS":>6}\033[m')
+    print(f'\033[34m{"JOGADOR":<8}{"PARTIDAS":^10}{"VITÓRIAS":^10}{"PONTOS":>6}\033[m')
     comando = f'SELECT NOME,PARTIDAS, VITORIAS, PONTOS FROM jogadores ORDER BY PONTOS DESC'
     cursor.execute(comando)
     resultado = cursor.fetchall()

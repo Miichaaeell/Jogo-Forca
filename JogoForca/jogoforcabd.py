@@ -11,7 +11,7 @@ try:
         while resposta != 0:
             resposta = menu()
             if resposta == 1:
-                newjogador = newcadastro().upper()
+                newjogador = newcadastro()
                 print(f'{newjogador} cadastrado com sucesso')
             elif resposta == 3:
                 verpontos()
@@ -19,9 +19,10 @@ try:
                 deletar()
             elif resposta == 2:
                 jogador = mostrarjogadores()
-                vitoria = vitorias(jogador)
-                partida = int(partidas(jogador))
-                break
+                if jogador != 0:
+                    vitoria = vitorias(jogador)
+                    partida = int(partidas(jogador))
+                    break
         if resposta == 0:
             break
         palavras = aleatorio()
