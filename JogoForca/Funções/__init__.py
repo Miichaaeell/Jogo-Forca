@@ -6,7 +6,6 @@ def cadastro():
     player['PARTIDAS'] = 0
     player['VITORIAS'] = 0
     player['PONTOS'] = 0
-    print(player)
     return player
 
 def listarjogadores(lista):
