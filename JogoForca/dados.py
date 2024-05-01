@@ -9,13 +9,16 @@ def newcadastro():
     )
     cursor = conexao.cursor()
     linha(f'{"Novo Cadastro":^30}')
-    nome = str(input('Nome: ')).upper()
-    comando = f'INSERT INTO jogadores (NOME, PARTIDAS, VITORIAS, PONTOS) VALUES ("{nome}", 0, 0, 0)'
-    cursor.execute(comando)
-    conexao.commit()
-    cursor.close()
-    conexao.close()
-    return nome
+    nome = str(input('Digite 0 para voltar ao menu. \nNome: \n')).upper()
+    if int(nome) == 0:
+        return nome
+    else:
+        comando = f'INSERT INTO jogadores (NOME, PARTIDAS, VITORIAS, PONTOS) VALUES ("{nome}", 0, 0, 0)'
+        cursor.execute(comando)
+        conexao.commit()
+        cursor.close()
+        conexao.close()
+        return nome
 def deletar():
     conexao = mysql.connector.connect(
         host='localhost',

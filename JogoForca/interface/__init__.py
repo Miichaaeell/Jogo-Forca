@@ -11,7 +11,7 @@ def menu():
           f'\n4 - Deletar jogador'
           f'\n0 - Sair do jogo\033[m')
     while True:
-        resposta = str(input('Sua opção: '))
+        resposta = str(input('Sua opção:\n '))
         if resposta.isnumeric() and int(resposta) < 5:
             return int(resposta)
             break

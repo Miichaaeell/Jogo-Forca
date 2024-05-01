@@ -4,7 +4,7 @@ from time import sleep
 def cadastro():
     player = {}
     interface.linha(f'{"Novo Cadastro":^30}')
-    player['NOME'] = str(input('Nome do Jogador(a): '))
+    player['NOME'] = str(input('Nome do Jogador(a):\n '))
     player['PARTIDAS'] = 0
     player['VITORIAS'] = 0
     player['PONTOS'] = 0
@@ -72,7 +72,7 @@ def inicar():
         retorno = interface.menu()
         if retorno == 1:
             newjogador = dados.newcadastro()
-            print(f'{newjogador} cadastrado com sucesso')
+            if int(newjogador) != 0: print(f'{newjogador} cadastrado com sucesso')
         elif retorno == 3:
             dados.verpontos()
         elif retorno == 4:
