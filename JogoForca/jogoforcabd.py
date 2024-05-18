@@ -18,7 +18,8 @@ try:
             palavra = palavras['palavra']
             dica = palavras['dica']
             while jogo == True: #JOGO
-                linha(f'Sua palavra contem {len(palavra)} letras e a dica é {dica.upper()}') if chances <= 3 else linha(f'Sua palavra contem {len(palavra)} letras')
+                linha(f'Sua palavra contem {len(palavra)} letras e a dica é {dica.upper()}') if chances <= 3 \
+                    else linha(f'Sua palavra contem {len(palavra)} letras')
                 mostrarpalvra(palavra,chutes)
                 chute = validarchute(palavra)
                 timercheck()
